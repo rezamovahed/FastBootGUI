@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+#this is still work in progress, if you would like a specific feature, please ether submit an issue, or commit to the code
+#Auther:  Artemis-Arrow
+#I have only included a few commands (the ones I use when rooting my device which is a redmi note 9, feel free to commit more commands)
+import dearpygui.dearpygui as dpg
+import os
+
+#functions
+def selectpath(sender, data):
+    dpg.add_file_dialog(directory_selector=True, show=true, callback=callback, tag="file_dialog_id")
+    dpg.add_file_extension(".img")
+
+def adbrebootloader(sender, data):
+    os.system("adb reboot bootloader")
+
+def flashvbmeta(sender, data):
+    os.system("fastboot --disable-verity --disable-verification flash vbmeta " + vbmetaimg)
+
+def eraseusrdata(sender, data):
+    os.system("fastboot erase userdata")
+
+def erasecashe(sender, data):
+    os.system("fastboot erase cache")
+
+def flashboot(sender, data):
+    os.system("fastboot flash boot " + bootimg)
+
+def callback(sender, data):
+    print("test successful")
+
+
+dpg.create_context()
+dpg.create_viewport(title='FastBootGUI (rename later)', width=600, height=300)
+
+with dpg.window(label=""):
+    dpg.add_button(label="select path to image", callback = selectpath)
+    dpg.add_file_dialog(directory_selector=True, show=True, callback=callback, tag="file_dialog_id")
+    dpg.add_input_text(label="string", default_value="Quick brown fox")
+    dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
+
+dpg.setup_dearpygui()
+dpg.show_viewport()
+dpg.start_dearpygui()
+dpg.destroy_context()
+
