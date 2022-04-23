@@ -94,6 +94,7 @@ with dpg.window(label=""):
     dpg.add_button(label="reboot to recovery", callback = adbrebootrecovery)
     dpg.add_button(label="install apps", callback = selectapkinstall)
     dpg.add_button(label="reinstall/update apps", callback = selectapkreinstall)
+    dpg.add_separator()
     #fastboot
     dpg.add_button(label="flash boot image", callback = selectpathboot)
     dpg.add_button(label="flash vbmeta", callback = selectpathvbmeta)
