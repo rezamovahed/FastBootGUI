@@ -15,6 +15,14 @@ def adbrebootloader(sender, data):
 def adbrebootrecovery(sender, data):
     os.system("adb reboot recovery")
 
+def selectapkinstall(sender, data):
+    with dpg.file_dialog(directory_selector=False, show=True, callback=installapk, id="file_dialog_id"):
+        dpg.add_file_extension(".apk")
+
+def selectapkreinstall(sender, data):
+    with dpg.file_dialog(directory_selector=False, show=True, callback=reinstallapk, id="file_dialog_id"):
+        dpg.add_file_extension(".apk")
+
 #fastboot functions
 
 def flashvbmeta(sender, data):
@@ -30,6 +38,9 @@ def erasecashe(sender, data):
 def flashboot(sender, data):
     imagepath = data['file_path_name']
     os.system("fastboot flash boot " + imagepath)
+def flashrecovery(sender, data):
+    imagepath = data['file_path_name']
+    os.system("fastboot flash recovery " + imagepath)
 
 def bootloaderunlock(sender, data):
     os.system("fastboot oem unlock")
@@ -40,6 +51,11 @@ def bootloaderlock(sender, data):
 def devicereset(sender, data):
     os.system("fastboot -w")
 
+
+
+def callback(sender, data):
+    print("")
+
 #misc functions
 
 def selectpathboot(sender, data):
@@ -49,6 +65,21 @@ def selectpathboot(sender, data):
 def selectpathvbmeta(sender, data):
     with dpg.file_dialog(directory_selector=False, show=True, callback=flashvbmeta, id="file_dialog_id"):
         dpg.add_file_extension(".img")
+
+def selectpathrecovery(sender, data):
+    with dpg.file_dialog(directory_selector=False, show=True, callback=flashrecovery, id="file_dialog_id"):
+        dpg.add_file_extension(".*")
+
+def reboot(sender, data):
+    os.system("fastboot reboot")
+
+def installapk(sender, data):
+    apkloc = data['file_path_name']
+    os.system("adb install " +apkloc)
+
+def reinstallapk(sender, data):
+    apkloc = data['file_path_name']
+    os.system("adb install -r " +apkloc)
 
 def exit(sender, data):
      os._exit(0)
@@ -61,14 +92,18 @@ with dpg.window(label=""):
     #adb
     dpg.add_button(label="reboot to bootloader", callback = adbrebootloader)
     dpg.add_button(label="reboot to recovery", callback = adbrebootrecovery)
+    dpg.add_button(label="install apps", callback = selectapkinstall)
+    dpg.add_button(label="reinstall/update apps", callback = selectapkreinstall)
     #fastboot
     dpg.add_button(label="flash boot image", callback = selectpathboot)
     dpg.add_button(label="flash vbmeta", callback = selectpathvbmeta)
+    dpg.add_button(label="flash recovery", callback = selectpathrecovery)
     dpg.add_button(label="erase userdata", callback = eraseusrdata)
     dpg.add_button(label="erase cashe", callback = erasecashe)
     dpg.add_button(label="unlock bootloader", callback = bootloaderunlock)
     dpg.add_button(label="lock bootloader", callback = bootloaderlock)
     dpg.add_button(label="reset device", callback = devicereset)
+    dpg.add_button(label="reboot", callback = reboot)
     dpg.add_button(label="exit", callback = exit)
 
 dpg.setup_dearpygui()
