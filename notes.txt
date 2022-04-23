@@ -1,0 +1,4 @@
+convert this
+{'file_path_name': '/path/to/image/boot.img', 'file_name': 'boot.img', 'current_path': '/path/to/image/boot.img', 'current_filter': '.img', 'min_size': [100.0, 100.0], 'max_size': [30000.0, 30000.0], 'selections': {'boot.img': ''/path/to/image/boot.img'boot.img'}}
+to this
+/path/to/image/boot.img
