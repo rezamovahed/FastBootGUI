@@ -27,7 +27,6 @@ def erasecashe(sender, data):
     os.system("fastboot erase cache")
 
 def flashboot(sender, data):
-    str(data)
     os.system("fastboot flash boot " + data)
 
 def bootloaderunlock(sender, data):
