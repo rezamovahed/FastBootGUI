@@ -27,6 +27,7 @@ def erasecashe(sender, data):
     os.system("fastboot erase cache")
 
 def flashboot(sender, data):
+    str(data)
     os.system("fastboot flash boot " + data)
 
 def bootloaderunlock(sender, data):
@@ -46,12 +47,15 @@ def callback(sender, data):
 #misc functions
 
 def selectpathboot(sender, data):
-    bootimg = dpg.add_file_dialog(directory_selector=False, show=True, callback=flashboot, tag="file_dialog_id")
-    dpg.add_file_extension(".img")
+    with dpg.file_dialog(directory_selector=False, show=True, callback=flashboot, id="file_dialog_id"):
+        dpg.add_file_extension(".*")
 
 def selectpathvbmeta(sender, data):
-    bootimg = dpg.add_file_dialog(directory_selector=False, show=True, callback=flashvbmeta, tag="file_dialog_id")
-    dpg.add_file_extension(".img")
+    with dpg.file_dialog(directory_selector=False, show=True, callback=flashvbmeta, id="file_dialog_id"):
+        dpg.add_file_extension(".*")
+
+def exit(sender, data):
+     os._exit(0)
 
 #create window
 dpg.create_context()
@@ -69,6 +73,7 @@ with dpg.window(label=""):
     dpg.add_button(label="unlock bootloader", callback = bootloaderunlock)
     dpg.add_button(label="lock bootloader", callback = bootloaderlock)
     dpg.add_button(label="reset device", callback = devicereset)
+    dpg.add_button(label="exit", callback = exit)
 
 dpg.setup_dearpygui()
 dpg.show_viewport()
