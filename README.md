@@ -15,4 +15,3 @@ a GUI for fastboot written in python using dear pyGUI library
 11. lock bootloader (on some devices, not all
 12. reset device
 13. reboot device
-14. exit
