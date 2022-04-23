@@ -9,6 +9,7 @@ import os
 def selectpath(sender, data):
     bootimg = dpg.add_file_dialog(directory_selector=False, show=True, callback=callback, tag="file_dialog_id")
     dpg.add_file_extension(".img")
+    print(bootimg)
 
 def adbrebootloader(sender, data):
     os.system("adb reboot bootloader")
@@ -26,16 +27,18 @@ def flashboot(sender, data):
     os.system("fastboot flash boot " + bootimg)
 
 def callback(sender, data):
-    print("test successful")
+    print("")
 
-
+#create window
 dpg.create_context()
 dpg.create_viewport(title='FastBootGUI (rename later)', width=1920, height=1080)
 
 with dpg.window(label=""):
-    dpg.add_button(label="select path to image", callback = selectpath)
+    dpg.add_button(label="select path to image (not working)", callback = selectpath)
     dpg.add_button(label="flash boot", callback = flashboot)
-    dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
+    dpg.add_button(label="reboot to bootloader", callback = adbrebootloader)
+    dpg.add_button(label="erase userdata", callback = eraseusrdata)
+    dpg.add_button(label="erase cashe", callback = erasecashe)
 
 dpg.setup_dearpygui()
 dpg.show_viewport()
