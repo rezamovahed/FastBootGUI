@@ -18,7 +18,8 @@ def adbrebootrecovery(sender, data):
 #fastboot functions
 
 def flashvbmeta(sender, data):
-    os.system("fastboot --disable-verity --disable-verification flash vbmeta " + data)
+    imagepath = data['file_path_name']
+    os.system("fastboot --disable-verity --disable-verification flash vbmeta " + imagepath)
 
 def eraseusrdata(sender, data):
     os.system("fastboot erase userdata")
@@ -27,7 +28,8 @@ def erasecashe(sender, data):
     os.system("fastboot erase cache")
 
 def flashboot(sender, data):
-    os.system("fastboot flash boot " + data)
+    imagepath = data['file_path_name']
+    os.system("fastboot flash boot " + imagepath)
 
 def bootloaderunlock(sender, data):
     os.system("fastboot oem unlock")
@@ -38,20 +40,15 @@ def bootloaderlock(sender, data):
 def devicereset(sender, data):
     os.system("fastboot -w")
 
-
-
-def callback(sender, data):
-    print("")
-
 #misc functions
 
 def selectpathboot(sender, data):
     with dpg.file_dialog(directory_selector=False, show=True, callback=flashboot, id="file_dialog_id"):
-        dpg.add_file_extension(".*")
+        dpg.add_file_extension(".img")
 
 def selectpathvbmeta(sender, data):
     with dpg.file_dialog(directory_selector=False, show=True, callback=flashvbmeta, id="file_dialog_id"):
-        dpg.add_file_extension(".*")
+        dpg.add_file_extension(".img")
 
 def exit(sender, data):
      os._exit(0)
