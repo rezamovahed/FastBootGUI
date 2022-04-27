@@ -81,8 +81,16 @@ def reinstallapk(sender, data):
     apkloc = data['file_path_name']
     os.system("adb install -r " +apkloc)
 
+def resetpass(sender, data):
+    os.system("adb devices")
+    os.system("adb shell")
+    os.system("cd data/system")
+    os.system("su")
+    os.system("rm *.key")
+    os.system("reboot")
+
 def exit(sender, data):
-     os._exit(0)
+    os._exit(0)
 
 #create window
 dpg.create_context()
@@ -90,10 +98,12 @@ dpg.create_viewport(title='FastBootGUI (rename later)', width=1920, height=1080)
 
 with dpg.window(label=""):
     #adb
+    dpg.collapsing_header()
     dpg.add_button(label="reboot to bootloader", callback = adbrebootloader)
     dpg.add_button(label="reboot to recovery", callback = adbrebootrecovery)
     dpg.add_button(label="install apps", callback = selectapkinstall)
     dpg.add_button(label="reinstall/update apps", callback = selectapkreinstall)
+    dpg.add_button(label="reset password", callback = resetpass) #does this work? idk
     dpg.add_separator()
     #fastboot
     dpg.add_button(label="flash boot image", callback = selectpathboot)
